@@ -140,7 +140,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = os.getenv(
     'CSRF_TRUSTED_ORIGINS',
-    'http://localhost:8080,http://127.0.0.1:8080,http://localhost:80,http://127.0.0.1:80,http://localhost'
+    'https://vyzareddy.in,https://www.vyzareddy.in,http://vyzareddy.in,http://www.vyzareddy.in,http://localhost:8080,http://127.0.0.1:8080,http://localhost:80,http://127.0.0.1:80,http://localhost'
 ).split(',')
 
 

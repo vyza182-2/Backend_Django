@@ -67,11 +67,14 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
-    # Public Gateway Ports
+    # Public Gateway Ports (HTTP & HTTPS)
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - django_static:/usr/share/nginx/html/static:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot:ro
     networks:
       - portfolio_network
 
