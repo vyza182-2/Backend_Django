@@ -1,0 +1,290 @@
+/* =============================================================
+   VYZA ULTRA-PROFESSIONAL DJANGO ADMIN DARK THEME
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+  --primary-bg: #07090e;
+  --surface-1: #0d121d;
+  --surface-2: #141c2e;
+  --surface-card: rgba(18, 25, 41, 0.75);
+  --border-subtle: rgba(56, 189, 248, 0.12);
+  --border-glow: rgba(6, 182, 212, 0.35);
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Base resets & typography */
+html, body {
+  background-color: var(--primary-bg) !important;
+  color: var(--text-main) !important;
+  font-family: var(--font-sans) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header & Navbar */
+#header {
+  background: linear-gradient(135deg, #090e1a 0%, #0d1527 50%, #080d1a 100%) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  padding: 14px 28px !important;
+  backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+}
+
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+  color: #fff !important;
+  font-family: var(--font-display) !important;
+  font-weight: 800 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: -0.02em !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+#user-tools {
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+}
+
+#user-tools a {
+  color: var(--accent-cyan) !important;
+  text-decoration: none !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  background: rgba(6, 182, 212, 0.08) !important;
+  border: 1px solid rgba(6, 182, 212, 0.2) !important;
+  transition: all 0.2s ease !important;
+}
+
+#user-tools a:hover {
+  background: rgba(6, 182, 212, 0.2) !important;
+  border-color: var(--accent-cyan) !important;
+  color: #fff !important;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.3) !important;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+  background: var(--surface-1) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  padding: 12px 28px !important;
+  color: var(--text-muted) !important;
+  font-size: 0.85rem !important;
+}
+
+div.breadcrumbs a {
+  color: var(--accent-cyan) !important;
+  text-decoration: none !important;
+}
+
+/* Dashboard Cards & Modules */
+.module {
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  margin-bottom: 24px !important;
+  transition: transform 0.2s ease, border-color 0.2s ease !important;
+}
+
+.module:hover {
+  border-color: var(--border-glow) !important;
+}
+
+.module caption, .module h2 {
+  background: linear-gradient(90deg, #111a2e, #0d1525) !important;
+  color: #fff !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  padding: 14px 20px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Table styles */
+#changelist table, .module table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+#changelist table thead th, .module table th {
+  background: #0b111e !important;
+  color: var(--text-muted) !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 14px 18px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+#changelist table tbody tr, .module table tbody tr {
+  background: transparent !important;
+  transition: background 0.15s ease !important;
+}
+
+#changelist table tbody tr:hover, .module table tbody tr:hover {
+  background: rgba(56, 189, 248, 0.05) !important;
+}
+
+#changelist table tbody td, .module table tbody td {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  color: #e2e8f0 !important;
+  font-size: 0.88rem !important;
+}
+
+#changelist table tbody td a {
+  color: #38bdf8 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+
+#changelist table tbody td a:hover {
+  color: #7dd3fc !important;
+  text-decoration: underline !important;
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+  background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3) !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
+
+.button:hover, input[type=submit]:hover, .submit-row input:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45) !important;
+  filter: brightness(1.1) !important;
+}
+
+.button.default, input[type=submit].default {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Forms & Inputs */
+input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], select, textarea {
+  background: #090e18 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 10px !important;
+  color: #f1f5f9 !important;
+  padding: 10px 14px !important;
+  font-size: 0.88rem !important;
+  transition: all 0.2s ease !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-cyan) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.2) !important;
+}
+
+/* Search bar */
+#searchbar {
+  border-radius: 12px !important;
+  padding: 11px 18px !important;
+  background: #0a101d !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+/* KPI Dashboard Cards */
+.vyza-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.vyza-kpi-card {
+  background: linear-gradient(135deg, rgba(13, 20, 36, 0.8) 0%, rgba(20, 29, 51, 0.8) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.vyza-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-glow);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.15);
+}
+
+.vyza-kpi-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.vyza-kpi-value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.vyza-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.vyza-pill-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.vyza-pill-cyan {
+  background: rgba(6, 182, 212, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.vyza-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}

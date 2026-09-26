@@ -1,0 +1,52 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="vyza-kpi-grid">
+    <!-- Card 1: Live Domain & SSL -->
+    <div class="vyza-kpi-card">
+        <div class="vyza-kpi-label">Production Domain</div>
+        <div class="vyza-kpi-value" style="font-size: 1.25rem;">vyzareddy.in</div>
+        <div style="margin-top: 10px;">
+            <span class="vyza-pill vyza-pill-green">
+                <span class="vyza-pill-dot"></span> HTTPS / SSL Active
+            </span>
+        </div>
+    </div>
+
+    <!-- Card 2: Telegram Bot Integration -->
+    <div class="vyza-kpi-card">
+        <div class="vyza-kpi-label">Telegram Real-Time Alerts</div>
+        <div class="vyza-kpi-value" style="font-size: 1.25rem;">@VyzaNotificationBot</div>
+        <div style="margin-top: 10px;">
+            <span class="vyza-pill vyza-pill-cyan">
+                <span class="vyza-pill-dot"></span> Bot Connected
+            </span>
+        </div>
+    </div>
+
+    <!-- Card 3: Database Engine -->
+    <div class="vyza-kpi-card">
+        <div class="vyza-kpi-label">Primary Database</div>
+        <div class="vyza-kpi-value" style="font-size: 1.25rem;">PostgreSQL 16</div>
+        <div style="margin-top: 10px;">
+            <span class="vyza-pill vyza-pill-green">
+                <span class="vyza-pill-dot"></span> Volume Persistent
+            </span>
+        </div>
+    </div>
+
+    <!-- Card 4: Architecture -->
+    <div class="vyza-kpi-card">
+        <div class="vyza-kpi-label">Infrastructure</div>
+        <div class="vyza-kpi-value" style="font-size: 1.25rem;">AWS EC2 + Docker</div>
+        <div style="margin-top: 10px;">
+            <span class="vyza-pill vyza-pill-cyan">
+                <span class="vyza-pill-dot"></span> Nginx Proxy
+            </span>
+        </div>
+    </div>
+</div>
+
+{{ block.super }}
+{% endblock %}
