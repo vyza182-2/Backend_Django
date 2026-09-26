@@ -138,10 +138,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# HTTPS Reverse Proxy Header Settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
 CSRF_TRUSTED_ORIGINS = os.getenv(
     'CSRF_TRUSTED_ORIGINS',
     'https://vyzareddy.in,https://www.vyzareddy.in,http://vyzareddy.in,http://www.vyzareddy.in,http://localhost:8080,http://127.0.0.1:8080,http://localhost:80,http://127.0.0.1:80,http://localhost'
 ).split(',')
+
 
 
 # Django REST Framework
