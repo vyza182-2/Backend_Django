@@ -1,14 +1,15 @@
 /* =============================================================
-   VYZA ULTRA-PROFESSIONAL DJANGO ADMIN DARK THEME
+   VYZA ULTRA-PROFESSIONAL DJANGO ADMIN THEME
+   Cyberpunk Luxury Dark Palette • Glassmorphism • Neon Accents
    ============================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap');
 
 :root {
   --primary-bg: #07090e;
   --surface-1: #0d121d;
   --surface-2: #141c2e;
-  --surface-card: rgba(18, 25, 41, 0.75);
+  --surface-card: rgba(18, 25, 41, 0.82);
   --border-subtle: rgba(56, 189, 248, 0.12);
   --border-glow: rgba(6, 182, 212, 0.35);
   --accent-cyan: #06b6d4;
@@ -32,13 +33,29 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07090e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
 /* Header & Navbar */
 #header {
   background: linear-gradient(135deg, #090e1a 0%, #0d1527 50%, #080d1a 100%) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
   padding: 14px 28px !important;
-  backdrop-filter: blur(12px) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(14px) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
 }
 
 #branding h1, #branding h1 a:link, #branding h1 a:visited {
@@ -89,14 +106,48 @@ div.breadcrumbs a {
   text-decoration: none !important;
 }
 
+/* Message Banners (Success / Warning / Error) */
+ul.messagelist {
+  padding: 0 !important;
+  margin: 16px 28px !important;
+  list-style: none !important;
+}
+
+ul.messagelist li {
+  padding: 14px 20px !important;
+  border-radius: 12px !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 10px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+ul.messagelist li.success {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  color: #34d399 !important;
+}
+
+ul.messagelist li.warning {
+  background: rgba(245, 158, 11, 0.15) !important;
+  border: 1px solid rgba(245, 158, 11, 0.35) !important;
+  color: #fbbf24 !important;
+}
+
+ul.messagelist li.error {
+  background: rgba(244, 63, 94, 0.15) !important;
+  border: 1px solid rgba(244, 63, 94, 0.35) !important;
+  color: #fda4af !important;
+}
+
 /* Dashboard Cards & Modules */
 .module {
   background: var(--surface-card) !important;
   border: 1px solid var(--border-subtle) !important;
-  border-radius: 16px !important;
+  border-radius: 18px !important;
   overflow: hidden !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(14px) !important;
   margin-bottom: 24px !important;
   transition: transform 0.2s ease, border-color 0.2s ease !important;
 }
@@ -111,7 +162,7 @@ div.breadcrumbs a {
   font-family: var(--font-display) !important;
   font-weight: 700 !important;
   font-size: 0.95rem !important;
-  padding: 14px 20px !important;
+  padding: 14px 22px !important;
   border-bottom: 1px solid var(--border-subtle) !important;
   letter-spacing: 0.02em !important;
 }
@@ -161,6 +212,45 @@ div.breadcrumbs a {
   text-decoration: underline !important;
 }
 
+/* Changelist Filter Sidebar */
+#changelist-filter {
+  background: var(--surface-1) !important;
+  border-left: 1px solid var(--border-subtle) !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+}
+
+#changelist-filter h2 {
+  background: transparent !important;
+  color: #fff !important;
+  font-size: 0.9rem !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 14px !important;
+}
+
+#changelist-filter h3 {
+  color: var(--accent-cyan) !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+#changelist-filter li.selected a {
+  color: #38bdf8 !important;
+  font-weight: 700 !important;
+}
+
+#changelist-filter a {
+  color: var(--text-muted) !important;
+  font-size: 0.82rem !important;
+}
+
+#changelist-filter a:hover {
+  color: #fff !important;
+}
+
 /* Buttons */
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
   background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%) !important;
@@ -188,7 +278,39 @@ div.breadcrumbs a {
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
 }
 
-/* Forms & Inputs */
+.button.deletelink, a.deletelink {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3) !important;
+}
+
+/* Forms, Fieldsets & Inputs */
+fieldset {
+  background: var(--surface-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 16px !important;
+  padding: 20px 24px !important;
+  margin-bottom: 24px !important;
+}
+
+fieldset h2 {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 0 12px 0 !important;
+  font-size: 1.05rem !important;
+  color: #fff !important;
+}
+
+.form-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  padding: 14px 0 !important;
+}
+
+.form-row label {
+  color: #94a3b8 !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+}
+
 input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], select, textarea {
   background: #090e18 !important;
   border: 1px solid #1e293b !important;
@@ -223,11 +345,11 @@ input:focus, select:focus, textarea:focus {
 }
 
 .vyza-kpi-card {
-  background: linear-gradient(135deg, rgba(13, 20, 36, 0.8) 0%, rgba(20, 29, 51, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(13, 20, 36, 0.85) 0%, rgba(20, 29, 51, 0.85) 100%);
   border: 1px solid rgba(56, 189, 248, 0.15);
-  border-radius: 16px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(12px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
@@ -251,7 +373,7 @@ input:focus, select:focus, textarea:focus {
 
 .vyza-kpi-value {
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: 800;
   color: #fff;
   line-height: 1;
