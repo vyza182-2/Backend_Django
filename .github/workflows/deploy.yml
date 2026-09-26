@@ -64,8 +64,9 @@ jobs:
   deploy-to-ec2:
     name: Deploy to AWS EC2
     needs: test-and-build
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.EC2_HOST != ''
     runs-on: ubuntu-latest
+
 
     steps:
       - name: 🚀 Deploy via SSH to EC2
