@@ -1,4 +1,4 @@
-name: CI/CD Pipeline - Test & Deploy to AWS EC2
+name: CI/CD Pipeline - Test, Deploy & Monitor (AWS EC2)
 
 on:
   push:
@@ -59,15 +59,18 @@ jobs:
           npm run build
 
   # =============================================================
-  # Job 2: Continuous Deployment (Auto Deploy to AWS EC2)
+  # Job 2: Continuous Deployment, Health Check & Auto-Rollback
   # =============================================================
   deploy-to-ec2:
-    name: Deploy to AWS EC2
+    name: Deploy to AWS EC2 & Verify
     needs: test-and-build
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     steps:
+      - name: 📥 Check out repository
+        uses: actions/checkout@v4
+
       - name: 🔍 Check EC2 Configuration
         id: check-secrets
         env:
@@ -80,7 +83,7 @@ jobs:
             echo "configured=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: 🚀 Deploy via SSH to EC2
+      - name: 🚀 Deploy, Health Check & Auto-Rollback on EC2
         if: steps.check-secrets.outputs.configured == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -88,14 +91,40 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
             cd ~/Backend_Django || cd ~/portfolio || cd ~/app
+
             echo "==> Pulling latest changes from GitHub..."
             git pull origin main || git pull origin master
-            
-            echo "==> Rebuilding and restarting Docker containers..."
+
+            echo "==> Building and deploying Docker containers..."
             docker compose up --build -d
-            
+
+            echo "==> Running Post-Deployment Health Check..."
+            if ! bash ./scripts/health_check.sh http://localhost; then
+              echo "❌ Health check failed! Initiating automated rollback..."
+              bash ./scripts/rollback.sh
+              exit 1
+            fi
+
             echo "==> Cleaning up dangling images..."
             docker image prune -f
-            
-            echo "==> Deployment Complete!"
+
+            echo "🎉 Deployment & Verification Complete!"
+
+      # =============================================================
+      # Job 3: Telegram Deployment Notifications
+      # =============================================================
+      - name: 📢 Telegram Alert (Success)
+        if: success() && steps.check-secrets.outputs.configured == 'true'
+        run: |
+          MESSAGE="🚀 <b>Deployment Succeeded!</b>%0A%0A📦 <b>Repo:</b> ${{ github.repository }}%0A🔖 <b>Branch:</b> ${{ github.ref_name }}%0A👤 <b>Author:</b> ${{ github.actor }}%0A📝 <b>Commit:</b> ${{ github.event.head_commit.message }}%0A🌐 <b>Host:</b> ${{ secrets.EC2_HOST }}%0A%0A✔ Health checks passed & live!"
+          curl -s -X POST "https://api.telegram.org/bot8250541502:AAFALN4E6kFdA1qvwu417HRAZFcTmiOVurw/sendMessage" \
+            -d "chat_id=7278760428&text=${MESSAGE}&parse_mode=HTML"
+
+      - name: 🚨 Telegram Alert (Failure / Rollback)
+        if: failure() && steps.check-secrets.outputs.configured == 'true'
+        run: |
+          MESSAGE="❌ <b>Deployment FAILED & Rolled Back!</b>%0A%0A📦 <b>Repo:</b> ${{ github.repository }}%0A🔖 <b>Branch:</b> ${{ github.ref_name }}%0A👤 <b>Author:</b> ${{ github.actor }}%0A📝 <b>Commit:</b> ${{ github.event.head_commit.message }}%0A%0A⚠️ Please check GitHub Actions logs."
+          curl -s -X POST "https://api.telegram.org/bot8250541502:AAFALN4E6kFdA1qvwu417HRAZFcTmiOVurw/sendMessage" \
+            -d "chat_id=7278760428&text=${MESSAGE}&parse_mode=HTML"
