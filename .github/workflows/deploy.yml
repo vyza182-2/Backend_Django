@@ -64,12 +64,24 @@ jobs:
   deploy-to-ec2:
     name: Deploy to AWS EC2
     needs: test-and-build
-    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.EC2_HOST != ''
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
-
     steps:
+      - name: 🔍 Check EC2 Configuration
+        id: check-secrets
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+        run: |
+          if [ -z "$EC2_HOST" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "::notice::⚠️ AWS EC2 Secrets (EC2_HOST, EC2_USER, EC2_SSH_KEY) not configured yet. Skipping deployment step."
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: 🚀 Deploy via SSH to EC2
+        if: steps.check-secrets.outputs.configured == 'true'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
