@@ -21,6 +21,11 @@ def send_telegram_notification(visitor):
     bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
     chat_id = os.getenv('TELEGRAM_CHAT_ID')
 
+    if bot_token:
+        bot_token = bot_token.strip().strip("'").strip('"')
+    if chat_id:
+        chat_id = chat_id.strip().strip("'").strip('"')
+
     if not bot_token or not chat_id:
         print(f"[TELEGRAM] Warning: Credentials missing (TOKEN: {bool(bot_token)}, CHAT_ID: {bool(chat_id)})")
         return
