@@ -15,8 +15,15 @@ echo "============================================================="
 # 1. Install Certbot
 echo "==> Checking and installing Certbot..."
 if ! command -v certbot &> /dev/null; then
-    sudo dnf install -y certbot 2>/dev/null || sudo yum install -y certbot 2>/dev/null || sudo apt update && sudo apt install -y certbot
+    if command -v dnf &> /dev/null; then
+        sudo dnf install -y certbot
+    elif command -v yum &> /dev/null; then
+        sudo yum install -y certbot
+    elif command -v apt-get &> /dev/null; then
+        sudo apt-get update && sudo apt-get install -y certbot
+    fi
 fi
+
 
 # 2. Temporarily stop container on port 80 to run standalone verification
 echo "==> Stopping frontend container to issue certificate on port 80..."
