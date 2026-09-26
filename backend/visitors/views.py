@@ -70,7 +70,9 @@ class VisitorListCreateView(generics.ListCreateAPIView):
     """
     queryset = Visitor.objects.all()
     serializer_class = VisitorSerializer
+    authentication_classes = []
 
     def perform_create(self, serializer):
         visitor = serializer.save()
         send_telegram_notification(visitor)
+
