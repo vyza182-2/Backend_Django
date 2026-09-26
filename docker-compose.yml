@@ -1,0 +1,86 @@
+services:
+  # -------------------------------------------------------------
+  # PostgreSQL Database Service
+  # -------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: portfolio_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-portfolio_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_secure_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-portfolio_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - portfolio_network
+
+  # -------------------------------------------------------------
+  # Django REST Framework Backend Service
+  # -------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portfolio_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DEBUG: ${DEBUG:-False}
+      SECRET_KEY: ${SECRET_KEY:-django-insecure-production-secret-key-change-this}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,backend,frontend,*}
+      DB_ENGINE: django.db.backends.postgresql
+      DB_NAME: ${DB_NAME:-portfolio_db}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres_secure_password}
+      DB_HOST: db
+      DB_PORT: 5432
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost,http://127.0.0.1,http://localhost:80,http://127.0.0.1:80,http://localhost:8080}
+    volumes:
+      - django_static:/app/staticfiles
+    ports:
+      - "8000:8000"
+    networks:
+      - portfolio_network
+
+  # -------------------------------------------------------------
+  # React (Nginx) Frontend & Reverse Proxy Service
+  # -------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: portfolio_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - django_static:/usr/share/nginx/html/static:ro
+    networks:
+      - portfolio_network
+
+# -------------------------------------------------------------
+# Persistent Volumes & Networks
+# -------------------------------------------------------------
+volumes:
+  postgres_data:
+    driver: local
+  django_static:
+    driver: local
+
+networks:
+  portfolio_network:
+    driver: bridge

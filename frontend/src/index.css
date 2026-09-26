@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Silkscreen:wght@400;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 224 71% 4%; /* Deep obsidian dark background */
+    --foreground: 210 40% 98%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 191 91% 48%; /* Electric cyan */
+    --primary-foreground: 222 47% 4%;
+    --secondary: 217 33% 14%;
+    --secondary-foreground: 210 40% 90%;
+    --muted: 217 33% 11%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 35 95% 55%; /* AWS amber */
+    --accent-foreground: 222 47% 4%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 16%;
+    --input: 217 33% 16%;
+    --ring: 191 91% 48%;
+    --radius: 0.85rem;
+
+    --gradient-primary: linear-gradient(135deg, #67e8f9 0%, #38bdf8 52%, #818cf8 100%);
+    --gradient-secondary: linear-gradient(135deg, #0891b2 0%, #172033 100%);
+    --gradient-card: linear-gradient(145deg, rgba(18, 31, 49, 0.82), rgba(9, 15, 27, 0.94));
+    --shadow-glow: 0 0 28px -8px rgba(34, 211, 238, 0.28);
+    --shadow-glow-lg: 0 0 48px -12px rgba(56, 189, 248, 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-primary;
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(34, 211, 238, 0.045) 0%, transparent 38%),
+      radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.035) 0%, transparent 42%);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(34, 211, 238, 0.25);
+    color: #cffafe;
+  }
+
+  section[id] {
+    scroll-margin-top: 88px;
+  }
+
+  :focus-visible {
+    outline: 2px solid #67e8f9;
+    outline-offset: 4px;
+  }
+
+  @media (pointer: fine) {
+    body {
+      cursor: none;
+    }
+
+    a,
+    button,
+    input,
+    textarea {
+      cursor: none;
+    }
+  }
+
+  @media (pointer: fine) and (prefers-reduced-motion: reduce) {
+    body,
+    a,
+    button,
+    input,
+    textarea {
+      cursor: auto;
+    }
+  }
+}
+
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 180ms ease, width 180ms ease, height 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.custom-cursor-dot {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 999px;
+  background: #67e8f9;
+  box-shadow: 0 0 14px rgba(103, 232, 249, 0.85);
+}
+
+.custom-cursor-ring {
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 1px solid rgba(103, 232, 249, 0.6);
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.04);
+  transition: transform 80ms ease-out, opacity 180ms ease, width 180ms ease, height 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.custom-cursor-dot[data-visible="true"],
+.custom-cursor-ring[data-visible="true"] {
+  opacity: 1;
+}
+
+.custom-cursor-ring[data-hover="true"] {
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-color: rgba(129, 140, 248, 0.85);
+  background: rgba(129, 140, 248, 0.08);
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .font-dot {
+    font-family: 'DotGothic16', 'Silkscreen', monospace;
+    letter-spacing: 0.05em;
+  }
+  .font-digital {
+    font-family: 'Silkscreen', 'DotGothic16', monospace;
+    letter-spacing: 0.08em;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  .text-gradient-cyan {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #06b6d4, #3b82f6);
+  }
+  .glow-border {
+    @apply border border-primary/30;
+    box-shadow: var(--shadow-glow);
+  }
+  .card-pro {
+    background: var(--gradient-card);
+    @apply border border-slate-800/80 backdrop-blur-md shadow-xl transition-all duration-300;
+  }
+  .card-pro-hover {
+    background: var(--gradient-card);
+    @apply border border-slate-800/80 backdrop-blur-md shadow-xl transition-all duration-300;
+    @apply hover:border-cyan-400/40 hover:-translate-y-1;
+  }
+  .card-pro-hover:hover {
+    box-shadow: var(--shadow-glow);
+  }
+  .tech-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.75;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 35px 2px rgba(139, 92, 246, 0.5); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+.animate-spin-slow {
+  animation: spin-slow 25s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+  background: #0891b2;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #22d3ee;
+}

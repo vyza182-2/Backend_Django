@@ -1,0 +1,22 @@
+{
+  "name": "backend-django-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Unified Full-Stack Portfolio: React + Vite + Django REST Framework",
+  "scripts": {
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan,magenta\" \"npm run backend\" \"npm run frontend\"",
+    "frontend": "npm run dev --prefix frontend",
+    "backend": "powershell -ExecutionPolicy Bypass -Command \"if (Test-Path .\\venv\\Scripts\\python.exe) { .\\venv\\Scripts\\python.exe backend\\manage.py runserver 8000 } else { python backend\\manage.py runserver 8000 }\"",
+    "build": "npm run build --prefix frontend",
+    "migrate": "powershell -ExecutionPolicy Bypass -Command \"if (Test-Path .\\venv\\Scripts\\python.exe) { .\\venv\\Scripts\\python.exe backend\\manage.py migrate } else { python backend\\manage.py migrate }\"",
+    "makemigrations": "powershell -ExecutionPolicy Bypass -Command \"if (Test-Path .\\venv\\Scripts\\python.exe) { .\\venv\\Scripts\\python.exe backend\\manage.py makemigrations } else { python backend\\manage.py makemigrations }\"",
+    "install:all": "npm install && npm install --prefix frontend",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:build": "docker compose up --build",
+    "docker:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
