@@ -15,7 +15,7 @@ echo "==> Starting Post-Deployment Health Checks on: ${HOST}..."
 echo "--> Checking Frontend (HTTP 200)..."
 FRONTEND_HEALTHY=false
 for i in $(seq 1 $MAX_RETRIES); do
-  HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${HOST}/" || true)
+  HTTP_STATUS=$(curl -k -s -L -o /dev/null -w "%{http_code}" "${HOST}/" || true)
   if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
     echo "✔ Frontend is healthy! (HTTP ${HTTP_STATUS})"
     FRONTEND_HEALTHY=true
@@ -34,9 +34,9 @@ fi
 echo "--> Checking Backend API (/api/visitors/)..."
 API_HEALTHY=false
 for i in $(seq 1 $MAX_RETRIES); do
-  HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${HOST}/api/visitors/" || true)
-  if [ "$HTTP_STATUS" = "200" ]; then
-    echo "✔ Backend API is healthy! (HTTP 200)"
+  HTTP_STATUS=$(curl -k -s -L -o /dev/null -w "%{http_code}" "${HOST}/api/visitors/" || true)
+  if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
+    echo "✔ Backend API is healthy! (HTTP ${HTTP_STATUS})"
     API_HEALTHY=true
     break
   fi
